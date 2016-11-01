@@ -54,6 +54,10 @@ class PPIPNMessage
         foreach ($rawPostArray as $keyValue) {
             $keyValue = explode('=', $keyValue);
             if (count($keyValue) == 2) {
+                //decode square brackets
+				$patterns = ['/%5B/', '/%5D/'];
+				$replaces = ['[', ']'];
+				$keyValue[0] = preg_replace($patterns, $replaces, $keyValue[0]);
                 $this->ipnData[$keyValue[0]] = urldecode($keyValue[1]);
             }
         }
